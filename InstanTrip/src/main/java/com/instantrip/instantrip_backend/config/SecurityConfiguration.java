@@ -36,6 +36,7 @@ public class SecurityConfiguration {
             .authorizationEndpoint(authorization -> authorization
                 .authorizationRequestResolver(authorizationRequestResolver())
             )
+            .defaultSuccessUrl("http://localhost:5173", true)
         )
         .logout(logout -> logout
             .logoutSuccessHandler(cognitoLogoutHandler)

@@ -1,19 +1,21 @@
 package com.instantrip.instantrip_backend.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * In this class, we tell SpringBoot to render and return our Thymeleaf html document.
+ * CORS 설정으로 React 앱에서 API 접근을 허용합니다.
  */
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
   @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("home");
-    registry.addViewController("/login").setViewName("login");
-    registry.addViewController("/dashboard").setViewName("dashboard");
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+        .allowedOrigins("http://localhost:5173") // Vite 기본 포트
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowCredentials(true) // 세션 쿠키 전송 허용
+        .maxAge(3600);
   }
 }
