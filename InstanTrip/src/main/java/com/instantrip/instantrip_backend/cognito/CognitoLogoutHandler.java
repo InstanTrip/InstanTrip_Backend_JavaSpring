@@ -1,4 +1,4 @@
-package com.instantrip.instantrip_backend.handler;
+package com.instantrip.instantrip_backend.cognito;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

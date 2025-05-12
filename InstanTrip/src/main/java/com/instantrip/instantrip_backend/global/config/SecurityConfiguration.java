@@ -1,6 +1,6 @@
-package com.instantrip.instantrip_backend.config;
+package com.instantrip.instantrip_backend.global.config;
 
-import com.instantrip.instantrip_backend.handler.CognitoLogoutHandler;
+import com.instantrip.instantrip_backend.cognito.CognitoLogoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
