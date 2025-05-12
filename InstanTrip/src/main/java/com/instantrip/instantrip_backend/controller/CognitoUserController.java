@@ -35,8 +35,7 @@ public class CognitoUserController {
     }
 
     if (principal != null) {
-      //userInfo.put("name", principal.getName());
-//      userInfo.put("name", principal.get
+      userInfo.put("name", principal.getName());
       userInfo.put("email", principal.getAttribute("email"));
       userInfo.put("sub", principal.getAttribute("sub"));
 
@@ -45,13 +44,6 @@ public class CognitoUserController {
 
       // 권한 정보 추가 (옵션)
       userInfo.put("authorities", principal.getAuthorities().toString());
-
-      userInfo.put("test", principal);
-
-      userInfo.put("aa", principal.getName());
-      userInfo.put("ab", principal.getClass().getName());
-      userInfo.put("ab", principal.getClass().getFields());
-//      userInfo.put("ab", principal.getClass().getName());
     }
 
     return userInfo;
