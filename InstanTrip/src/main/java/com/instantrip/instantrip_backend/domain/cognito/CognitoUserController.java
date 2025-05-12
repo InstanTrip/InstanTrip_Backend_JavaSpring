@@ -1,4 +1,4 @@
-package com.instantrip.instantrip_backend.cognito;
+package com.instantrip.instantrip_backend.domain.cognito;
 
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
