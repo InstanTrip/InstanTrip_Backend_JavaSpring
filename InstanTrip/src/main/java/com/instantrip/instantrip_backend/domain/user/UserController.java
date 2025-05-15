@@ -2,6 +2,7 @@ package com.instantrip.instantrip_backend.domain.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Data
+    public static class NicknameRequest {
+        private String nickname;
+    }
 
     @GetMapping("/view-nickname")
     public ResponseEntity<Map<String, Object>> getCurrentUser(
@@ -50,11 +56,11 @@ public class UserController {
         return ResponseEntity.ok(userNickname);
     }
 
-    @PostMapping("/update-nickname")
+    @PostMapping("/change-nickname")
     public ResponseEntity<Map<String, Object>> updateUserNickname(
         @AuthenticationPrincipal OAuth2User principal,
         HttpServletRequest request,
-        @RequestParam(value = "nickname") String nickname) {
+        @RequestBody NicknameRequest nicknameRequest) {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -66,6 +72,9 @@ public class UserController {
             if (principal != null) {
                 // 세션에서 사용자 sub 속성 가져오기
                 String userId = principal.getAttribute("sub");
+
+                // 닉네임을 요청 본문에서 가져오기
+                String nickname = nicknameRequest.getNickname();
 
                 // 닉네임 업데이트 로직
                 boolean isUpdated = userService.updateUserNickname(userId, nickname);
