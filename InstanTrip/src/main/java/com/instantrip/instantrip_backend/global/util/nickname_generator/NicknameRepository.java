@@ -1,4 +1,4 @@
-package com.instantrip.instantrip_backend.domain.nickname_generator;
+package com.instantrip.instantrip_backend.global.util.nickname_generator;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

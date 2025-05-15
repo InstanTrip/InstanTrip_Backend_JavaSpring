@@ -1,6 +1,6 @@
 package com.instantrip.instantrip_backend.domain.user;
 
-import com.instantrip.instantrip_backend.domain.nickname_generator.NicknameService;
+import com.instantrip.instantrip_backend.global.util.nickname_generator.NicknameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
