@@ -1,5 +1,6 @@
 package com.instantrip.instantrip_backend.global.util.trip_manager;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
@@ -8,16 +9,12 @@ import java.util.List;
 public class TripRequest {
 
     @Data
+    @AllArgsConstructor
     public static class Taste {
         private List<String> accommodation_taste;
         private List<String> destination_taste;
         private List<String> restaurant_taste;
 
-        public Taste(String accTaste, String destTaste, String restTaste) {
-            this.accommodation_taste = List.of(accTaste.split(","));
-            this.destination_taste = List.of(destTaste.split(","));
-            this.restaurant_taste = List.of(restTaste.split(","));
-        }
     }
 
     private String start_date;
@@ -25,7 +22,7 @@ public class TripRequest {
     private List<String> location;
     private Taste taste;
 
-    public TripRequest(String start_date, String end_date, List<String> location, String accTaste, String destTaste, String restTaste) {
+    public TripRequest(String start_date, String end_date, List<String> location, List<String> accTaste, List<String> destTaste, List<String> restTaste) {
         this.start_date = start_date;
         this.end_date = end_date;
         this.location = location;

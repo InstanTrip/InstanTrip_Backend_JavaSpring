@@ -26,7 +26,7 @@ public class TripPlanService {
 //    }
 
     // 여행 계획 생성
-    public TripPlan createTripPlan(String userId, String startDate, String endDate, List<String> locations, String accTaste, String destTaste, String restTaste) {
+    public TripPlan createTripPlan(String userId, String startDate, String endDate, List<String> locations, List<String> accTaste, List<String> destTaste, List<String> restTaste) {
         TripRequest tripRequest = new TripRequest(
                 startDate,
                 endDate,

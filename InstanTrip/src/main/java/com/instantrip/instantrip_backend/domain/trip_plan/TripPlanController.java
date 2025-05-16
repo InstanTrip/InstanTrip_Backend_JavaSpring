@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -41,9 +40,9 @@ public class TripPlanController {
         private String start_date;
         private String end_date;
         private List<String> location;
-        private String accommodation_taste;
-        private String destination_taste;
-        private String restaurant_taste;
+        private List<String> accommodation_taste;
+        private List<String> destination_taste;
+        private List<String> restaurant_taste;
     }
 
     @Data
@@ -86,17 +85,18 @@ public class TripPlanController {
                 );
 
                 if (initializedTripPlan != null) {
+                    response.put("Success", "Trip plan created successfully");
                     response.put("plan_id", initializedTripPlan.getId());
-                    response.put("start_date", dateTimeTransformer.convDateTime2DateString(initializedTripPlan.getPlanStart()));
-                    response.put("end_date", dateTimeTransformer.convDateTime2DateString(initializedTripPlan.getPlanEnd()));
-                    response.put("owner", userService.getUserNickname(initializedTripPlan.getOwnerId()));
-
-                    List<String> participantsIds = initializedTripPlan.getParticipants();
-                    response.put("participants", participantsIds.stream()
-                            .map(id -> userService.getUserNickname(id))
-                            .collect(Collectors.toList()));
-
-                    response.put("invite_code", initializedTripPlan.getInviteCode());
+//                    response.put("start_date", dateTimeTransformer.convDateTime2DateString(initializedTripPlan.getPlanStart()));
+//                    response.put("end_date", dateTimeTransformer.convDateTime2DateString(initializedTripPlan.getPlanEnd()));
+//                    response.put("owner", userService.getUserNickname(initializedTripPlan.getOwnerId()));
+//
+//                    List<String> participantsIds = initializedTripPlan.getParticipants();
+//                    response.put("participants", participantsIds.stream()
+//                            .map(id -> userService.getUserNickname(id))
+//                            .collect(Collectors.toList()));
+//
+//                    response.put("invite_code", initializedTripPlan.getInviteCode());
                 }
 
                 else {
