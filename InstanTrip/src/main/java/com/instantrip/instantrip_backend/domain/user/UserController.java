@@ -79,7 +79,7 @@ public class UserController {
                 // 닉네임 업데이트 로직
                 boolean isUpdated = userService.updateUserNickname(userId, nickname);
                 if (isUpdated) {
-                    response.put("message", "Nickname updated successfully");
+                    response.put("Success", "Nickname updated successfully");
                 } else {
                     response.put("Error", "Failed to update nickname");
                     return ResponseEntity.badRequest().body(response);
