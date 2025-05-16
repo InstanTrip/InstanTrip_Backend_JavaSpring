@@ -22,13 +22,13 @@ public class TripRequest {
 
     private String start_date;
     private String end_date;
-    private List<String> locations;
+    private List<String> location;
     private Taste taste;
 
-    public TripRequest(String start_date, String end_date, List<String> locations, String accTaste, String destTaste, String restTaste) {
+    public TripRequest(String start_date, String end_date, List<String> location, String accTaste, String destTaste, String restTaste) {
         this.start_date = start_date;
         this.end_date = end_date;
-        this.locations = locations;
+        this.location = location;
         this.taste = new Taste(accTaste, destTaste, restTaste);
     }
 }

@@ -15,12 +15,12 @@ public class TripHandler {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${trip.fastapi.url}")
-    private static String tripApiUrl;
+    private String tripApiUrl;
 
     // FastAPI 서버와 통신하여 여행 계획 생성
-    public List<TripResponse> createTrip(TripRequest request) throws Exception {
+    public List<TripResponse> createTrip(TripRequest request) {
 
-        String createTripUrl = tripApiUrl + "create_trip/";
+        String createTripUrl = tripApiUrl + "create-trip/";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

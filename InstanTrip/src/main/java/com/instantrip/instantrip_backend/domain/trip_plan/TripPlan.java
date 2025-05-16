@@ -30,8 +30,8 @@ public class TripPlan {
         @NoArgsConstructor
         public static class Node {
 
-            private String destinationType;
-            private String destinationId;
+            private String destination_type;
+            private String destination_id;
             private String memo;
 
         }
@@ -43,9 +43,6 @@ public class TripPlan {
 
     @Id
     private String id;
-
-    @Field("plan_id")
-    private int planId;
 
     @Field("owner_id")
     private String ownerId;
