@@ -1,4 +1,4 @@
-package com.instantrip.instantrip_backend.global.util.nickname_generator;
+package com.instantrip.instantrip_backend.domain.nickname;
 
 
 import jakarta.persistence.Column;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "nickname_examples", schema = "instantrip")
-public class NicknameModel {
+public class Nickname {
 
     @Id
     @Column(name = "ex_id")

@@ -1,6 +1,7 @@
-package com.instantrip.instantrip_backend.global.util.nickname_generator;
+package com.instantrip.instantrip_backend.domain.nickname;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -8,6 +9,8 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class NicknameService {
+
+    @Autowired
     private final NicknameRepository nicknameRepository;
 
     // prefix, postfix 수는 업데이트 시 임의 변경 가능
@@ -26,8 +29,8 @@ public class NicknameService {
         String prefixIndex = prefixValue < 10 ? "0" + prefixValue : prefixValue + "";
         String postfixIndex = postfixValue < 10 ? "0" + postfixValue : postfixValue + "";
 
-        NicknameModel prefix = nicknameRepository.findByNicknameId("prefix" + prefixIndex);
-        NicknameModel postfix = nicknameRepository.findByNicknameId("postfix" + postfixIndex);
+        Nickname prefix = nicknameRepository.findByNicknameId("prefix" + prefixIndex);
+        Nickname postfix = nicknameRepository.findByNicknameId("postfix" + postfixIndex);
 
         return prefix.getNicknameValue() + " " + postfix.getNicknameValue();
     }
