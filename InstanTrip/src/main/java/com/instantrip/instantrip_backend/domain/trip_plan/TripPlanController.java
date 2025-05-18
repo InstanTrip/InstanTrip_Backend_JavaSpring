@@ -183,6 +183,7 @@ public class TripPlanController {
                         .dates(plan.getDates())
                         .location(plan.getDestinations().stream()
                                 .map(TripPlan.Destination::getLocation)
+                                .distinct()
                                 .toList())
                         .build())
                 .toList();

@@ -1,6 +1,5 @@
 package com.instantrip.instantrip_backend.domain.trip_plan;
 
-import com.instantrip.instantrip_backend.domain.invite_code.InviteCodeService;
 import com.instantrip.instantrip_backend.domain.user.UserService;
 import com.instantrip.instantrip_backend.global.util.trip_manager.TripHandler;
 import com.instantrip.instantrip_backend.global.util.trip_manager.TripMapper;
@@ -65,11 +64,6 @@ public class TripPlanService {
     // 여행 조회(여행 ID 기반)
     public TripPlan getTripPlanById(String tripPlanId) {
         return tripPlanRepository.findById(tripPlanId).orElse(null);
-    }
-
-    // 여행 조회(초대 코드 기반)
-    public TripPlan getTripPlanByInviteCode(String inviteCode) {
-        return tripPlanRepository.findByInviteCode(inviteCode).orElse(null);
     }
 
     // 여행 리스트 조회(참가자 ID 기반)
