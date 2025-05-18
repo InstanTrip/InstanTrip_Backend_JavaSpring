@@ -96,6 +96,18 @@ public class TripPlanController {
         private List<Destination> destinations;
     }
 
+    // 여행 초대 수락 요청 DTO
+    @Data
+    public static class AcceptRequest {
+        private String code;
+    }
+
+    // 여행 계획 삭제 요청 DTO
+    @Data
+    public static class DeleteRequest {
+        private String id;
+    }
+
     // 여행 계획 생성 API
     @PostMapping("/create-trip")
     public ResponseEntity<Map<String, Object>> createTrip(
@@ -170,9 +182,14 @@ public class TripPlanController {
         String userId = principal.getAttribute("sub");
         List<TripPlan> plans = tripPlanService.getTripPlansByParticipantId(userId);
 
-        if (plans == null || plans.isEmpty()) {
+        if (plans == null) {
             errLog.put("Error", "Failed to create trip plan");
             return ResponseEntity.badRequest().body(errLog);
+        }
+
+        if (plans.isEmpty()) {
+            errLog.put("Error", "No trip plans found");
+            return ResponseEntity.ok(errLog);
         }
 
         response = plans.stream()
@@ -260,4 +277,122 @@ public class TripPlanController {
         return ResponseEntity.ok(response);
     }
 
+    // 여행 초대 수락 API
+    @PostMapping("/accept-trip")
+    public ResponseEntity<?> acceptTrip(
+            @AuthenticationPrincipal OAuth2User principal,
+            HttpServletRequest request,
+            @RequestBody AcceptRequest acceptRequest) {
+
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> errLog = new HashMap<>();
+
+        // 세션 검증 로직
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            errLog.put("Error", "Cannot find session info");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        if (principal == null) {
+            errLog.put("Error", "Cannot find user info");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        // 세션에서 사용자 sub 속성 가져오기
+        String userId = principal.getAttribute("sub");
+
+        // 초대 코드로 여행 계획 ID 조회
+        String tripId = inviteCodeService.getTripIdByInviteCode(acceptRequest.getCode());
+
+        if (tripId == null) {
+            errLog.put("Error", "Failed to get trip plan");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        // 여행 계획에 참여
+        if (tripPlanService.addParticipantToTripPlan(tripId, userId)) {
+            response.put("Success", "Trip plan accepted successfully");
+            response.put("plan_id", tripId);
+        }
+
+        else {
+            errLog.put("Error", "Failed to accept trip plan");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 특정 여행 계획 삭제 API
+    @PostMapping("/delete-trip")
+    public ResponseEntity<?> deleteTrip(
+            @AuthenticationPrincipal OAuth2User principal,
+            HttpServletRequest request,
+            @RequestBody DeleteRequest deleteRequest) {
+
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> errLog = new HashMap<>();
+
+        // 세션 검증 로직
+        HttpSession session = request.getSession(false);
+
+        if (session == null)  {
+            errLog.put("Error", "Cannot find session info");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        if (principal == null) {
+            errLog.put("Error", "Cannot find user info");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        String planId = deleteRequest.getId();
+
+        // 여행 정보 조회
+        TripPlan plan = tripPlanService.getTripPlanById(planId);
+
+        if (plan == null) {
+            errLog.put("Error", "Failed to get trip plan");
+            return ResponseEntity.badRequest().body(errLog);
+        }
+
+        // 세션에서 사용자 sub 속성 가져오기
+        String userId = principal.getAttribute("sub");
+
+        // 접근 권한 확인 (해당 여행의 소유자인지)
+        if (plan.getOwnerId().equals(userId)) {
+
+            if (tripPlanService.deleteTripPlanByOwner(planId)) {
+                response.put("Success", "Trip plan deleted successfully");
+            }
+
+            else {
+                errLog.put("Error", "Failed to delete trip plan");
+                return ResponseEntity.badRequest().body(errLog);
+            }
+        }
+
+        // 접근 권한 확인 (해당 여행의 참여자인지)
+        else if (plan.getParticipants().contains(userId)) {
+
+            if (tripPlanService.deleteTripPlanByParticipant(planId, userId)) {
+                response.put("Success", "Trip plan deleted successfully");
+            }
+
+            else {
+                errLog.put("Error", "Failed to delete trip plan");
+                return ResponseEntity.badRequest().body(errLog);
+            }
+        }
+
+        // 접근 권한이 없을 때
+        else {
+            errLog.put("Error", "User does not have access to this trip plan");
+            return ResponseEntity.status(403).body(errLog);
+        }
+
+        return ResponseEntity.ok(response);
+    }
 }

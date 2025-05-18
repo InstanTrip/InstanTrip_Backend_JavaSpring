@@ -81,14 +81,29 @@ public class TripPlanService {
 
 
         tripPlan.setId(existingTripPlan.getId());
-
         tripPlanRepository.save(tripPlan);
-
         return existingTripPlan;
     }
 
-    // 여행 삭제
-    public boolean deleteTripPlan(String tripPlanId) {
+    // 여행 참가자 추가
+    public boolean addParticipantToTripPlan(String tripPlanId, String participantId) {
+        TripPlan existingTripPlan = tripPlanRepository.findById(tripPlanId).orElse(null);
+
+        if (existingTripPlan == null) {
+            return false;
+        }
+
+        List<String> participants = existingTripPlan.getParticipants();
+        if (!participants.contains(participantId)) {
+            participants.add(participantId);
+            existingTripPlan.setParticipants(participants);
+            tripPlanRepository.save(existingTripPlan);
+        }
+        return true;
+    }
+
+    // 여행 삭제 (소유자 전용)
+    public boolean deleteTripPlanByOwner(String tripPlanId) {
         TripPlan existingTripPlan = tripPlanRepository.findById(tripPlanId).orElse(null);
 
         if (existingTripPlan == null) {
@@ -99,5 +114,19 @@ public class TripPlanService {
         return true;
     }
 
+    // 여행 삭제 (참가자 전용)
+    public boolean deleteTripPlanByParticipant(String tripPlanId, String participantId) {
+        TripPlan existingTripPlan = tripPlanRepository.findById(tripPlanId).orElse(null);
 
+        if (existingTripPlan == null) {
+            return false;
+        }
+
+        List<String> participants = existingTripPlan.getParticipants();
+        participants.remove(participantId);
+
+        existingTripPlan.setParticipants(participants);
+        tripPlanRepository.save(existingTripPlan);
+        return true;
+    }
 }
