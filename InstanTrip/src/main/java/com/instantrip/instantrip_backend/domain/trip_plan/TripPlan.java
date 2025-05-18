@@ -47,9 +47,6 @@ public class TripPlan {
     @Field("owner_id")
     private String ownerId;
 
-    @Field("invite_code")
-    private String inviteCode;
-
     @Field("plan_start")
     private LocalDateTime planStart;
 

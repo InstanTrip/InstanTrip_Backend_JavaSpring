@@ -1,5 +1,6 @@
 package com.instantrip.instantrip_backend.domain.trip_plan;
 
+import com.instantrip.instantrip_backend.domain.invite_code.InviteCodeService;
 import com.instantrip.instantrip_backend.domain.user.UserService;
 import com.instantrip.instantrip_backend.global.util.trip_manager.TripHandler;
 import com.instantrip.instantrip_backend.global.util.trip_manager.TripMapper;
@@ -20,10 +21,6 @@ public class TripPlanService {
     private final TripPlanRepository tripPlanRepository;
     private final UserService userService;
     private final TripHandler tripHandler;
-
-    // 초대 코드 생성 (랜덤 문자열)
-//    private String generateInviteCode() {
-//    }
 
     // 여행 계획 생성
     public TripPlan createTripPlan(String userId, String startDate, String endDate, List<String> locations, List<String> accTaste, List<String> destTaste, List<String> restTaste) {
@@ -54,7 +51,6 @@ public class TripPlanService {
                     .dates(dates)
                     .participants(participants)
                     .destinations(destinations)
-                    .inviteCode("TestInviteCodeExample") // 이건 아직 구현되지 않음
                     .build();
 
             return tripPlanRepository.save(tripPlan);
@@ -73,12 +69,12 @@ public class TripPlanService {
 
     // 여행 조회(초대 코드 기반)
     public TripPlan getTripPlanByInviteCode(String inviteCode) {
-        return tripPlanRepository.findByInviteCode(inviteCode);
+        return tripPlanRepository.findByInviteCode(inviteCode).orElse(null);
     }
 
     // 여행 리스트 조회(참가자 ID 기반)
     public List<TripPlan> getTripPlansByParticipantId(String participantId) {
-        return tripPlanRepository.findByParticipantsContaining(participantId);
+        return tripPlanRepository.findByParticipantsContaining(participantId).orElse(null);
     }
 
     // 여행 업데이트

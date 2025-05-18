@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface TripPlanRepository extends MongoRepository<TripPlan, String> {
 
     Optional<TripPlan> findById(String id);
-    TripPlan findByInviteCode(String inviteCode);
-    List<TripPlan> findByParticipantsContaining(String participantId);
+    Optional<TripPlan> findByInviteCode(String inviteCode);
+    Optional<List<TripPlan>> findByParticipantsContaining(String participantId);
 }
