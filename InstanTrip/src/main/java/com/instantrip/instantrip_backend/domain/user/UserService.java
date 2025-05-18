@@ -1,12 +1,15 @@
 package com.instantrip.instantrip_backend.domain.user;
 
-import com.instantrip.instantrip_backend.global.util.nickname_generator.NicknameService;
+import com.instantrip.instantrip_backend.domain.nickname.NicknameService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+    @Autowired
     private final UserRepository userRepository;
     private final NicknameService nicknameService;
 
