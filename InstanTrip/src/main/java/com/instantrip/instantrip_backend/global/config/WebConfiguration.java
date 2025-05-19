@@ -13,7 +13,7 @@ public class WebConfiguration implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("http://localhost:5173") // Vite 기본 포트
+        .allowedOrigins("https://instantrip.ajb.kr") // Vite 기본 포트
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowCredentials(true) // 세션 쿠키 전송 허용
         .maxAge(3600);

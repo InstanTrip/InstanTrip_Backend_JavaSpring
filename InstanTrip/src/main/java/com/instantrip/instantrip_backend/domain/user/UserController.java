@@ -45,12 +45,12 @@ public class UserController {
             }
 
             else {
-                userNickname.put("Error", "Cannot find user info");
+                userNickname.put("Error", "Cannot find user info 1");
                 return ResponseEntity.badRequest().body(userNickname);
             }
         }
         else {
-            userNickname.put("Error", "Cannot find session info");
+            userNickname.put("Error", "Cannot find session info 2");
             return ResponseEntity.badRequest().body(userNickname);
         }
         return ResponseEntity.ok(userNickname);
