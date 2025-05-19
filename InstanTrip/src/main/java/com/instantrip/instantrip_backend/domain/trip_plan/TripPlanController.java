@@ -51,11 +51,25 @@ public class TripPlanController {
     @Data
     @Builder
     public static class TripPlanSimpleResponse {
+
+        @Data
+        @Builder
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class Taste {
+            private List<String> accommodation_taste;
+            private List<String> destination_taste;
+            private List<String> restaurant_taste;
+
+        }
+
         private String plan_id;
         private String plan_start;
         private String plan_end;
         private int dates;
         private List<String> location;
+
+        private Taste taste;
     }
 
     // 여행 계획 응답 DTO
@@ -86,6 +100,17 @@ public class TripPlanController {
             private List<Node> nodes;
         }
 
+        @Data
+        @Builder
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class Taste {
+            private List<String> accommodation_taste;
+            private List<String> destination_taste;
+            private List<String> restaurant_taste;
+
+        }
+
         private String plan_id;
         private String owner_id;
         private String invite_code;
@@ -94,6 +119,7 @@ public class TripPlanController {
         private int dates;
         private List<String> participants;
         private List<Destination> destinations;
+        private Taste taste;
     }
 
     // 여행 초대 수락 요청 DTO
@@ -202,6 +228,11 @@ public class TripPlanController {
                                 .map(TripPlan.Destination::getLocation)
                                 .distinct()
                                 .toList())
+                        .taste(TripPlanSimpleResponse.Taste.builder()
+                                .accommodation_taste(plan.getTastes().getAccommodation_taste())
+                                .destination_taste(plan.getTastes().getDestination_taste())
+                                .restaurant_taste(plan.getTastes().getRestaurant_taste())
+                                .build())
                         .build())
                 .toList();
 
@@ -272,6 +303,11 @@ public class TripPlanController {
                                         .toList())
                                 .build())
                         .toList())
+                .taste(TripPlanResponse.Taste.builder()
+                        .accommodation_taste(plan.getTastes().getAccommodation_taste())
+                        .destination_taste(plan.getTastes().getDestination_taste())
+                        .restaurant_taste(plan.getTastes().getRestaurant_taste())
+                        .build())
                 .build();
 
         return ResponseEntity.ok(response);

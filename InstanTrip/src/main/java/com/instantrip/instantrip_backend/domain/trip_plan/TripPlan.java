@@ -41,6 +41,17 @@ public class TripPlan {
         private List<Node> nodes;
     }
 
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Taste {
+        private List<String> accommodation_taste;
+        private List<String> destination_taste;
+        private List<String> restaurant_taste;
+
+    }
+
     @Id
     private String id;
 
@@ -61,6 +72,9 @@ public class TripPlan {
 
     @Field("destinations")
     private List<Destination> destinations;
+
+    @Field("tastes")
+    private Taste tastes;
 
 //    Last Updated는 나중에 구현 예정
 //    @Field("last_updated")

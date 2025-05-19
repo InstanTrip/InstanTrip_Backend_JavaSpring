@@ -50,6 +50,11 @@ public class TripPlanService {
                     .dates(dates)
                     .participants(participants)
                     .destinations(destinations)
+                    .tastes(TripPlan.Taste.builder()
+                            .accommodation_taste(accTaste)
+                            .destination_taste(destTaste)
+                            .restaurant_taste(restTaste)
+                            .build())
                     .build();
 
             return tripPlanRepository.save(tripPlan);
