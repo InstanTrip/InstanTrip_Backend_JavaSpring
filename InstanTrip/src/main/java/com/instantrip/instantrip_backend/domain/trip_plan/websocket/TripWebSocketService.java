@@ -14,6 +14,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,6 +63,10 @@ public class TripWebSocketService {
                 handleJoinMessage(session);
                 break;
 
+            case PING:
+                handlePingMessage(session);
+                break;
+
 //            case LEAVE:
 //                handleLeaveMessage(session, tripEditRequest);
 //                break;
@@ -108,6 +113,18 @@ public class TripWebSocketService {
         // 클라이언트에 여행 정보 전송
         session.sendMessage(new TextMessage(JSON));
 
+    }
+
+    private void handlePingMessage(WebSocketSession session) throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        String nowString = now.toString().split("\\.")[0];
+
+        String pingJSON = objectMapper.writeValueAsString(Map.of(
+                "type", "PONG",
+                "time", nowString
+        ));
+
+        session.sendMessage(new TextMessage(pingJSON));
     }
 
     private void handleUpdateMessage(WebSocketSession session, TripEditRequest request) throws Exception {

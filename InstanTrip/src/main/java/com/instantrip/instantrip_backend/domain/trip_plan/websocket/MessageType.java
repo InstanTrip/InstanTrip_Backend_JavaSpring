@@ -4,4 +4,5 @@ public enum MessageType {
     JOIN,
     LEAVE,
     UPDATE,
+    PING
 }
