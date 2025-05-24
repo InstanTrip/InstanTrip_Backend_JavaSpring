@@ -10,6 +10,7 @@ public class TripEditRequest {
     private MessageType message_type;
     private String date;
     private Integer index;
+    private String destination_type;
     private String destination_id;
     private String memo;
 }

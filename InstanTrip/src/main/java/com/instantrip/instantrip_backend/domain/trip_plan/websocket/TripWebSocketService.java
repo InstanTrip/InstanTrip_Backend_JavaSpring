@@ -143,15 +143,16 @@ public class TripWebSocketService {
         // 여행 정보 업데이트
         String date = request.getDate();
         int index = request.getIndex();
+        String destinationType = request.getDestination_type();
         String destinationId = request.getDestination_id();
         String memo = request.getMemo();
 
 
-        if (date == null || destinationId == null) {
-            log.warn("Missing date or destinationId");
+        if (date == null || destinationId == null || destinationType == null) {
+            log.warn("Missing date or destinationId or destinationType");
             String errorJSON = objectMapper.writeValueAsString(Map.of(
                     "type", "UPDATE",
-                    "error", "Missing date or destinationId"
+                    "error", "Missing date or destinationId or destinationType"
             ));
 
             session.sendMessage(new TextMessage(errorJSON));
@@ -169,6 +170,7 @@ public class TripWebSocketService {
                 }
 
                 TripPlan.Destination.Node node = destination.getNodes().get(index);
+                node.setDestination_type(destinationType);
                 node.setDestination_id(destinationId);
                 if (memo != null) {
                     node.setMemo(memo);
