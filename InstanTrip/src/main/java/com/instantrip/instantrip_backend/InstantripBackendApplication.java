@@ -9,5 +9,4 @@ public class InstantripBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(InstantripBackendApplication.class, args);
 	}
-
 }
