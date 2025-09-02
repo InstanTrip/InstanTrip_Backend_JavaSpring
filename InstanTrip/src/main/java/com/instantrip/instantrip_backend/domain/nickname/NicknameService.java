@@ -15,8 +15,8 @@ public class NicknameService {
     private final NicknamePostfixRepository nicknamePostfixRepository;
 
     // prefix, postfix 수는 업데이트 시 임의 변경 가능
-    private final int PREFIX_COUNT = 10;
-    private final int POSTFIX_COUNT = 10;
+    private final int PREFIX_COUNT = 12;
+    private final int POSTFIX_COUNT = 14;
 
     // 랜덤 닉네임 생성 로직
     // 미리 지정된 prefix와 postfix를 랜덤으로 조합하여 닉네임 생성
