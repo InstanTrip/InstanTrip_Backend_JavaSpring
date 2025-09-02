@@ -25,3 +25,4 @@ public class NicknamePostfix {
     @Column(name = "postfix_value")
     private String postfixValue;
 }
+

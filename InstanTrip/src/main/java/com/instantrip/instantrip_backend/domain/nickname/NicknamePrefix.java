@@ -25,3 +25,4 @@ public class NicknamePrefix {
     @Column(name = "prefix_value")
     private String prefixValue;
 }
+

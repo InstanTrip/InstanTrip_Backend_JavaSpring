@@ -6,3 +6,4 @@ public interface NicknamePostfixRepository extends JpaRepository<NicknamePostfix
 
     NicknamePostfix findByPostfixId(String postfixId);
 }
+
